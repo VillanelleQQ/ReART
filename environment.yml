@@ -1,0 +1,14 @@
+name: affectiveart
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu121
+      - torch
+      - torchvision
+      - transformers==4.57.1
+      - pillow==10.0.1
+      - sentencepiece
+      - safetensors
