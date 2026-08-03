@@ -12,3 +12,4 @@ dependencies:
       - pillow==10.0.1
       - sentencepiece
       - safetensors
+      - huggingface_hub
