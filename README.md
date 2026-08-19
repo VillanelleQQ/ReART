@@ -5,9 +5,9 @@ ReART: Reference-Guided Retrieval and Refinement for Emotion-Aware Art Generatio
 </h1>
 <p align="center">
     <strong>
-    Qianqian Tang<sup>*</sup>
+    Qianqian Tang
     ·
-    Jiayi Gao<sup>*</sup>
+    Jiayi Gao
     ·
     Ting Lei
     ·
