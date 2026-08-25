@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ReART: Reference-Guided Retrieval and Refinement for Emotion-Aware Art Generation</title>
+    <meta
+      name="description"
+      content="ReART project page for reference-guided retrieval and refinement for emotion-aware art generation."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="#">ReART</a>
+        <div class="nav-links" aria-label="Page sections">
+          <a href="#abstract">Abstract</a>
+          <a href="#challenge">Challenge</a>
+          <a href="#motivation">Motivation</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+          <a href="#qualitative">Qualitative</a>
+          <a href="#acknowledgements">Acknowledgements</a>
+          <a href="#citation">Citation</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="venue">ACM Multimedia 2026 Grand Challenge · AffectiveArt Track 1</p>
+        <h1>ReART: Reference-Guided Retrieval and Refinement for Emotion-Aware Art Generation</h1>
+        <p class="subtitle">
+          ReART grounds abstract affective prompts in concrete artistic
+          references and repairs axis-specific alignment failures. It ranked
+          <strong>2nd overall</strong> in the AffectiveArt 2026 Grand Challenge
+          Track 1 with a perfect AAS score.
+        </p>
+
+        <div class="authors" aria-label="Authors">
+          <a href="mailto:qianqian.tang@whu.edu.cn">Qianqian Tang<sup>1,2</sup></a>
+          <a href="mailto:gaojiayi26@stu.pku.edu.cn">Jiayi Gao<sup>1</sup></a>
+          <a href="mailto:ting_lei@pku.edu.cn">Ting Lei<sup>1</sup></a>
+          <a href="mailto:yangliu@pku.edu.cn">Yang Liu<sup>1</sup></a>
+        </div>
+
+        <p class="affiliations">
+          <sup>1</sup> Wangxuan Institute of Computer Technology, Peking
+          University<br />
+          <sup>2</sup> School of Computer Science, Wuhan University
+        </p>
+
+        <div class="link-row" aria-label="Project links">
+          <a
+            class="pill"
+            href="https://arxiv.org/abs/2608.22329"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Paper on arXiv"
+          >Paper</a>
+          <a
+            class="pill"
+            href="https://github.com/VillanelleQQ/ReART"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Code repository"
+          >Code</a>
+          <a
+            class="pill"
+            href="https://huggingface.co/datasets/printblue/EmoArt-130k"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="EmoArt dataset"
+          >Dataset</a>
+        </div>
+
+        <figure class="hero-figure">
+          <img
+            class="overview-image"
+            src="figures/teaser-1.png"
+            alt="ReART overview examples"
+            decoding="async"
+          />
+          <figcaption>
+            ReART improves emotion-aware artistic generation by combining
+            field-aligned references with targeted refinement.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section id="abstract" class="content-section">
+        <h2>Abstract</h2>
+        <p>
+          Emotion-aware artistic image generation requires a model to satisfy
+          semantic content, artistic style, and target emotion simultaneously.
+          The key challenge is that artistic captions often conflate these axes
+          into underspecified free-form text, making fine-grained visual
+          attributes such as brushwork, composition, and tonal atmosphere
+          difficult to ground concretely.
+        </p>
+        <p>
+          We present <strong>ReART</strong>, a reference-guided retrieval and
+          refinement framework. ReART decomposes captions and artwork
+          annotations into structured visual fields, performs field-wise
+          retrieval from style-specific reference pools, and uses the retrieved
+          references as role-specific visual evidence for initial synthesis.
+        </p>
+        <p>
+          For samples with low Attribute Alignment Score (AAS), ReART further
+          diagnoses failed dimensions, constructs constrained repair plans, routes
+          references by correction purpose, and performs targeted editing while
+          preserving correctly generated regions. ReART ranked 2nd overall in
+          the AffectiveArt 2026 Grand Challenge Track 1 with a perfect AAS score.
+        </p>
+      </section>
+
+      <section id="challenge" class="content-section">
+        <h2>Challenge Setting</h2>
+        <p>
+          AffectiveArt Track 1 asks participants to generate artistic images
+          from prompts that specify semantic content, artistic style, and target
+          emotion. Success requires more than drawing the right objects: the
+          generated artwork must express affect through brushwork, color,
+          composition, line, light, and material surface.
+        </p>
+        <div class="split-section">
+          <article>
+            <span class="card-icon" aria-hidden="true"><i class="fas fa-palette"></i></span>
+            <h3>AffectiveArt Track 1</h3>
+            <p>
+              Input prompts combine content, style, and desired emotional state.
+              Evaluation combines distributional quality via FID and alignment
+              quality via AAS.
+            </p>
+          </article>
+          <article>
+            <span class="card-icon" aria-hidden="true"><i class="fas fa-database"></i></span>
+            <h3>EmoArt Reference Data</h3>
+            <p>
+              EmoArt contains 132,664 artworks across 56 styles with structured
+              annotations for content, brushwork, composition, color, line,
+              light, emotion, and therapeutic potential.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="motivation" class="content-section">
+        <h2>Motivation</h2>
+        <div class="motivation-grid">
+          <article class="motivation-card problem-card">
+            <h3><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> The Problem: Emotion Is Underspecified</h3>
+            <p>
+              Artistic prompts mix content, style, emotion, and visual
+              attributes in one sentence, while text alone struggles to specify
+              brushwork, material surface, composition, and tonal atmosphere.
+            </p>
+            <div class="quote-box">
+              <em>"Ukiyo-e scene of a sailboat and small rowboat on rippling water before Mount Fuji..."</em>
+            </div>
+            <ul>
+              <li><strong>Entangled requirements:</strong> subject, style, and affect are hard to control separately.</li>
+              <li><strong>Missing visual evidence:</strong> subtle artistic cues are difficult to convey in language.</li>
+              <li><strong>Single-pass fragility:</strong> global regeneration may damage already correct content or layout.</li>
+            </ul>
+          </article>
+          <article class="motivation-card solution-card">
+            <h3><i class="fas fa-magic" aria-hidden="true"></i> Our Solution: Retrieve, Generate, Refine</h3>
+            <p>
+              ReART grounds each visual dimension in field-aligned references,
+              then repairs only failed alignment axes under explicit preservation
+              constraints.
+            </p>
+            <div class="quote-box success">
+              <em>Structured fields + role-specific references + targeted AAS repair.</em>
+            </div>
+            <ul>
+              <li><strong>Decompose:</strong> convert captions and annotations into controllable visual fields.</li>
+              <li><strong>Retrieve:</strong> assign references to subject, layout, texture, tone, and mood roles.</li>
+              <li><strong>Repair:</strong> use keep/fix/avoid/priority plans for constrained editing.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="method" class="content-section">
+        <h2>Reference-Guided Retrieval and Refinement</h2>
+        <p>
+          ReART follows a compact two-stage pipeline: retrieve visual evidence
+          for the prompt, then refine only the dimensions that fail alignment.
+        </p>
+
+        <figure class="wide-figure">
+          <img
+            class="paper-image"
+            src="figures/pipeline.png"
+            alt="ReART method pipeline"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            ReART pipeline: structured visual records, field-wise retrieval,
+            reference-guided generation, AAS scoring, and constrained
+            refinement.
+          </figcaption>
+        </figure>
+
+        <div class="stage-grid">
+          <article>
+            <span class="stage-label">Stage I</span>
+            <h3>Retrieval-Guided Artistic Generation</h3>
+            <ul class="stage-list">
+              <li>
+                <strong>Structure.</strong>
+                Compress captions and EmoArt annotations into shared visual
+                fields: subject, layout, material, brushwork, color, light,
+                line, and mood.
+              </li>
+              <li>
+                <strong>Retrieve.</strong>
+                Search style-specific pools field by field with BGE-M3 and
+                weighted fusion.
+              </li>
+              <li>
+                <strong>Generate.</strong>
+                Use retrieved artworks as role-specific evidence for initial
+                synthesis, not as full templates to copy.
+              </li>
+            </ul>
+            <figure class="stage-chart">
+              <img
+                src="figures/bar.png"
+                alt="AAS progression from caption-only to ReART Stage I and Stage I plus II"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>
+                AAS improves from caption-only generation to Stage I, then
+                further after constrained refinement.
+              </figcaption>
+            </figure>
+          </article>
+          <article>
+            <span class="stage-label">Stage II</span>
+            <h3>AAS-Driven Constrained Refinement</h3>
+            <ul class="stage-list">
+              <li>
+                <strong>Score.</strong>
+                Check content, style, and attribute alignment with a fixed
+                AAS-style multimodal judge.
+              </li>
+              <li>
+                <strong>Diagnose.</strong>
+                Locate subject, layout, texture, tone, or mixed failures.
+              </li>
+              <li>
+                <strong>Plan.</strong>
+                Build a compact edit plan from four controls.
+                <div class="plan-cards">
+                  <div>
+                    <code>keep</code>
+                    <span>Preserve correct regions.</span>
+                  </div>
+                  <div>
+                    <code>fix</code>
+                    <span>Name failed requirements.</span>
+                  </div>
+                  <div>
+                    <code>avoid</code>
+                    <span>Block visual drift.</span>
+                  </div>
+                  <div>
+                    <code>priority</code>
+                    <span>Order the edits.</span>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <strong>Edit.</strong>
+                Route references by correction purpose and update only the
+                failed dimensions before re-scoring.
+              </li>
+            </ul>
+            <div class="stage-note">
+              <h4>Refinement plan</h4>
+              <p>
+                Stage II converts the AAS diagnosis into constrained edit
+                instructions: retain aligned content, repair the failed
+                requirement, suppress new artifacts, and prioritize structural
+                errors before style or atmosphere.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="results" class="content-section">
+        <h2>Results</h2>
+        <p>
+          ReART ranked 2nd overall in the AffectiveArt 2026 Grand Challenge
+          Track 1. The system achieved a perfect AAS score across content,
+          style, and attribute alignment, demonstrating strong fine-grained
+          prompt-image consistency.
+        </p>
+
+        <h3>Official Challenge Results</h3>
+        <div class="metrics-grid">
+          <article>
+            <span class="metric">2nd</span>
+            <span class="metric-label">Official Track 1 ranking</span>
+          </article>
+          <article>
+            <span class="metric">0.78</span>
+            <span class="metric-label">Official overall score</span>
+          </article>
+          <article>
+            <span class="metric">1.00</span>
+            <span class="metric-label">Official AAS score</span>
+          </article>
+          <article>
+            <span class="metric">77.47</span>
+            <span class="metric-label">Official FID</span>
+          </article>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Team</th>
+                <th>Overall</th>
+                <th>FID</th>
+                <th>AAS</th>
+                <th>Content / Style / Attribute</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>USTC_PI_LAB_TEAM</td>
+                <td><strong>0.80</strong></td>
+                <td><strong>66.12</strong></td>
+                <td>0.99</td>
+                <td>0.99 / 0.99 / <strong>1.00</strong></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>EmoForge (Ours)</td>
+                <td>0.78</td>
+                <td>77.47</td>
+                <td><strong>1.00</strong></td>
+                <td><strong>1.00</strong> / <strong>1.00</strong> / <strong>1.00</strong></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>VIRlab</td>
+                <td>0.78</td>
+                <td>75.56</td>
+                <td>0.99</td>
+                <td>0.98 / 0.99 / 0.99</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>edaich</td>
+                <td>0.77</td>
+                <td>78.59</td>
+                <td>0.99</td>
+                <td>0.98 / 0.99 / 0.99</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="local-evaluation">
+          <h3 class="subsection-title">Local200 Evaluation</h3>
+          <p>
+            Because the official hidden reference set and organizer-side
+            evaluator are unavailable for controlled comparison, ReART is also
+            evaluated on Local200, a local validation set sampled from EmoArt to
+            cover the challenge styles. ReART achieves the best FID and AAS
+            among the compared generation baselines.
+          </p>
+
+          <div class="table-wrap local-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>FID</th>
+                  <th>AAS</th>
+                  <th>Content</th>
+                  <th>Style</th>
+                  <th>Attribute</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>FLUX.1-dev + IP-Adapter</td>
+                  <td>170.51</td>
+                  <td>6.52</td>
+                  <td>6.78</td>
+                  <td>7.46</td>
+                  <td>5.33</td>
+                </tr>
+                <tr>
+                  <td>Qwen-Image</td>
+                  <td>162.94</td>
+                  <td>7.69</td>
+                  <td>7.82</td>
+                  <td>7.67</td>
+                  <td>7.59</td>
+                </tr>
+                <tr>
+                  <td>HiDream-O1-Image</td>
+                  <td>156.33</td>
+                  <td>7.65</td>
+                  <td>8.06</td>
+                  <td>7.95</td>
+                  <td>6.94</td>
+                </tr>
+                <tr>
+                  <td>ReART (Ours)</td>
+                  <td><strong>147.43</strong></td>
+                  <td><strong>9.77</strong></td>
+                  <td><strong>9.88</strong></td>
+                  <td><strong>9.65</strong></td>
+                  <td><strong>9.79</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <section id="qualitative" class="content-section">
+        <h2>Qualitative Analysis</h2>
+        <figure class="wide-figure compact">
+          <img
+            class="paper-image"
+            src="figures/pic3.png"
+            alt="ReART qualitative comparison"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            Qualitative comparisons on representative artistic prompts.
+          </figcaption>
+        </figure>
+        <div class="comparison">
+          <h3>Representative Failure and Success Modes</h3>
+          <div class="comparison-grid">
+            <article>
+              <h4>Caption-only</h4>
+              <p>
+                Captures the main subject, but often misses period-specific
+                surface, linework, and affective tone.
+              </p>
+            </article>
+            <article>
+              <h4>Stage I</h4>
+              <p>
+                Field-aligned references strengthen style identity and
+                requested visual attributes.
+              </p>
+            </article>
+            <article>
+              <h4>Stage I + II</h4>
+              <p>
+                Targeted repair corrects residual drift while preserving
+                content and layout.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="acknowledgements" class="content-section">
+        <h2>Acknowledgements</h2>
+        <p>
+          This work was supported by the grants from the National Natural
+          Science Foundation of China 62372014 and Beijing Nova Program.
+        </p>
+      </section>
+
+      <section id="citation" class="content-section">
+        <div class="section-heading">
+          <h2>Citation</h2>
+          <button
+            class="copy-button"
+            type="button"
+            data-copy-target="citation-code"
+            aria-label="Copy citation"
+          >Copy</button>
+        </div>
+        <pre><code id="citation-code">@misc{tang2026reart,
+  title         = {ReART: Reference-Guided Retrieval and Refinement for Emotion-Aware Art Generation},
+  author        = {Qianqian Tang and Jiayi Gao and Ting Lei and Yang Liu},
+  year          = {2026},
+  eprint        = {2608.22329},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2608.22329}
+}</code></pre>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>ReART</span>
+      <span>Reference-Guided Retrieval and Refinement for Emotion-Aware Art Generation</span>
+    </footer>
+
+  </body>
+</html>
