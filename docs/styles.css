@@ -760,6 +760,70 @@ h4 {
   margin-top: 22px;
 }
 
+.qualitative-styles {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.style-row {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.style-row h3 {
+  margin-bottom: 14px;
+  color: var(--ink);
+  font-size: 1.16rem;
+}
+
+.style-examples {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.qualitative-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(180px, 1fr);
+  gap: 16px;
+  align-items: center;
+  min-height: 290px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  box-shadow: 0 10px 28px rgba(32, 48, 71, 0.055);
+}
+
+.qualitative-copy span {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--accent-strong);
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.qualitative-copy p {
+  margin: 0;
+  color: var(--content-copy);
+  font-size: 0.93rem;
+  line-height: 1.58;
+}
+
+.qualitative-card img {
+  display: block;
+  width: 100%;
+  height: 250px;
+  padding: 8px;
+  object-fit: contain;
+  border: 1px solid var(--figure-line);
+  border-radius: 8px;
+  background: var(--figure-bg);
+}
+
 .tool-table {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -1022,6 +1086,7 @@ pre {
   .tool-table,
   .stage-grid,
   .motivation-grid,
+  .style-examples,
   .local-result,
   .qualitative-layout,
   .metrics-grid,
@@ -1049,6 +1114,14 @@ pre {
 
   .paper-pages {
     gap: 16px;
+  }
+
+  .qualitative-card {
+    grid-template-columns: 1fr;
+  }
+
+  .qualitative-card img {
+    height: 280px;
   }
 
   .figure-grid.two-up {

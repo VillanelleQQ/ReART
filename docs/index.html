@@ -450,43 +450,232 @@
 
       <section id="qualitative" class="content-section">
         <h2>Qualitative Analysis</h2>
-        <figure class="wide-figure compact">
-          <img
-            class="paper-image"
-            src="figures/pic3.png"
-            alt="ReART qualitative comparison"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>
-            Qualitative comparisons on representative artistic prompts.
-          </figcaption>
-        </figure>
-        <div class="comparison">
-          <h3>Representative Failure and Success Modes</h3>
-          <div class="comparison-grid">
-            <article>
-              <h4>Caption-only</h4>
-              <p>
-                Captures the main subject, but often misses period-specific
-                surface, linework, and affective tone.
-              </p>
-            </article>
-            <article>
-              <h4>Stage I</h4>
-              <p>
-                Field-aligned references strengthen style identity and
-                requested visual attributes.
-              </p>
-            </article>
-            <article>
-              <h4>Stage I + II</h4>
-              <p>
-                Targeted repair corrects residual drift while preserving
-                content and layout.
-              </p>
-            </article>
-          </div>
+        <p>
+          Representative test-set prompts and the corresponding images generated
+          by ReART. The examples cover diverse artistic styles, compositions,
+          and affective requirements from Track 1.
+        </p>
+        <div class="qualitative-styles">
+          <section class="style-row">
+            <h3>Abstract</h3>
+            <div class="style-examples">
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    <strong>Abstract composition</strong> with a
+                    <strong>warm orange circle</strong>, triangular forms,
+                    delicate scribbled linework, and layered blue, teal, yellow,
+                    and ochre brushstrokes creating a textured,
+                    <strong>mysterious atmosphere</strong>.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0462.jpg" alt="ReART output for track1_0462" loading="lazy" decoding="async" />
+              </article>
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    <strong>Abstract monochrome composition</strong> of layered
+                    organic forms and vertical marks with
+                    <strong>rough brushstrokes</strong>, grainy texture, and a
+                    muted black, gray, and white palette.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0677.jpg" alt="ReART output for track1_0677" loading="lazy" decoding="async" />
+              </article>
+            </div>
+          </section>
+          <section class="style-row">
+            <h3>Baroque</h3>
+            <div class="style-examples">
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    A <strong>Baroque black-and-white engraving</strong> of a
+                    crowded mythological gathering in a wooded landscape with
+                    robed figures, animals, a cart, distant mountains, ornate
+                    banners, <strong>dense linework</strong>, and dramatic
+                    clouds.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0324.jpg" alt="ReART output for track1_0324" loading="lazy" decoding="async" />
+              </article>
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    A <strong>Baroque scene</strong> of several figures gathered
+                    around a draped table beneath classical columns, with a
+                    reclining man in the foreground, muted earthy colors, and
+                    <strong>dramatic light and shadow</strong>.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0383.jpg" alt="ReART output for track1_0383" loading="lazy" decoding="async" />
+              </article>
+            </div>
+          </section>
+          <section class="style-row">
+            <h3>Early Renaissance</h3>
+            <div class="style-examples">
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    An <strong>Early Renaissance gilded altarpiece</strong>
+                    with multiple small religious narrative panels above the
+                    <strong>Virgin and Child</strong> enthroned under a floral
+                    arch, with a serene landscape in
+                    <strong>rich jewel-toned colors</strong>.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0011.jpg" alt="ReART output for track1_0011" loading="lazy" decoding="async" />
+              </article>
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    An <strong>Early Renaissance religious interior</strong>
+                    with a winged angel kneeling before a robed woman beside an
+                    open book, surrounded by attendants, lilies, and
+                    <strong>precise linear detail</strong> in a solemn
+                    atmosphere.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0202.jpg" alt="ReART output for track1_0202" loading="lazy" decoding="async" />
+              </article>
+            </div>
+          </section>
+          <section class="style-row">
+            <h3>Gongbi</h3>
+            <div class="style-examples">
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    A <strong>Gongbi handscroll scene</strong> with delicate
+                    linework and muted silk tones, featuring calligraphy beside
+                    an <strong>ancient procession</strong> of riders and
+                    attendants beneath pine trees.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0102.jpg" alt="ReART output for track1_0102" loading="lazy" decoding="async" />
+              </article>
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    A <strong>Gongbi-style court scene</strong> with a seated
+                    nobleman on a raised platform, attendants and children in a
+                    palace courtyard, framed by rocks, trees,
+                    <strong>fine linework</strong>, and delicate colors.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0465.jpg" alt="ReART output for track1_0465" loading="lazy" decoding="async" />
+              </article>
+            </div>
+          </section>
+          <section class="style-row">
+            <h3>Impressionism</h3>
+            <div class="style-examples">
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    An <strong>impressionism painting</strong> of a quiet canal
+                    beside tall brick waterfront buildings, with a small bridge,
+                    moored boat, <strong>soft hazy light</strong>, and
+                    shimmering reflections on the water.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0860.jpg" alt="ReART output for track1_0860" loading="lazy" decoding="async" />
+              </article>
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    <strong>Three seated women</strong> with long dark hair in
+                    an intimate interior scene rendered in impressionism, with
+                    loose charcoal-like lines, muted earth tones, and
+                    <strong>soft sketchy textures</strong>.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0403.jpg" alt="ReART output for track1_0403" loading="lazy" decoding="async" />
+              </article>
+            </div>
+          </section>
+          <section class="style-row">
+            <h3>Ink and Wash</h3>
+            <div class="style-examples">
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    <strong>Ink and wash painting</strong> of a serene riverside
+                    landscape with sparse winter trees, distant banks, small
+                    bridges, and a lone figure rendered with
+                    <strong>delicate brushwork</strong> and muted tones.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0024.jpg" alt="ReART output for track1_0024" loading="lazy" decoding="async" />
+              </article>
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    <strong>Ink and wash painting</strong> of a
+                    <strong>fan-shaped landscape</strong> with misty mountains,
+                    clustered trees, and delicate monochrome brushwork on aged
+                    paper.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0034.jpg" alt="ReART output for track1_0034" loading="lazy" decoding="async" />
+              </article>
+            </div>
+          </section>
+          <section class="style-row">
+            <h3>Socialist Realism</h3>
+            <div class="style-examples">
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    <strong>Socialist Realism poster</strong> of four heroic
+                    soldiers in tan uniforms standing with rifles against a blue
+                    sky, rendered with bold angular brushstrokes and a
+                    <strong>solemn monumental composition</strong>.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0019.jpg" alt="ReART output for track1_0019" loading="lazy" decoding="async" />
+              </article>
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    A <strong>Socialist Realism poster</strong> of a uniformed
+                    border guard saluting joyful passengers leaning from a train
+                    window beside a red and green frontier post, with
+                    <strong>bold Cyrillic lettering</strong>.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0091.jpg" alt="ReART output for track1_0091" loading="lazy" decoding="async" />
+              </article>
+            </div>
+          </section>
+          <section class="style-row">
+            <h3>Ukiyo-e</h3>
+            <div class="style-examples">
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    <strong>Ukiyo-e scene</strong> of a sailboat and small
+                    rowboat on rippling water before Mount Fuji, with travelers
+                    near a stone embankment, delicate linework, muted colors,
+                    and a <strong>calm atmosphere</strong>.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0001.jpg" alt="ReART output for track1_0001" loading="lazy" decoding="async" />
+              </article>
+              <article class="qualitative-card">
+                <div class="qualitative-copy">
+                  <p>
+                    <strong>Ukiyo-e scene</strong> of three women in patterned
+                    robes seated indoors, one raising a small round fan with
+                    tassels, rendered with <strong>delicate linework</strong>
+                    and muted earthy colors.
+                  </p>
+                </div>
+                <img src="figures/qualitative/track1_0131.jpg" alt="ReART output for track1_0131" loading="lazy" decoding="async" />
+              </article>
+            </div>
+          </section>
         </div>
       </section>
 
